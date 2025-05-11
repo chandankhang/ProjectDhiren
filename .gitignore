@@ -1,0 +1,13 @@
+.env
+logs/
+*.log
+
+dist/
+build/
+out/
+
+*.tmp
+*.temp
+
+.DS_Store
+Thumbs.db

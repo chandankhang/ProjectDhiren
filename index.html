@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fun and interactive course for kids to learn construction testing techniques.">
+    <meta name="keywords" content="construction testing, kids course, civil engineering, educational videos">
+    <meta name="author" content="xAI">
+    <title>Construction Testing Course for Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Bubblegum Sans', cursive
+        }
+
+        body {
+            background-color: #e0f7fa;
+            transition: background-color .3s, color .3s
+        }
+
+        body.dark {
+            background-color: #263238;
+            color: #eceff1
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: #4caf50;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .1);
+            z-index: 1000
+        }
+
+        .header.dark {
+            background-color: #37474f
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            display: none;
+            color: #fff
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff
+        }
+
+        .theme-toggle {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #fff
+        }
+
+        .container {
+            display: flex;
+            margin-top: 80px
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #fff;
+            padding: 20px;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            transition: transform .3s ease;
+            border-right: 3px solid #4caf50
+        }
+
+        .sidebar.dark {
+            background-color: #37474f;
+            border-right: 3px solid #546e7a
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 20px
+        }
+
+        .sidebar.dark h2 {
+            color: #80deea
+        }
+
+        .sidebar ul {
+            list-style: none
+        }
+
+        .sidebar li {
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            background-color: #c8e6c9;
+            transition: background-color .3s, transform .2s
+        }
+
+        .sidebar li:hover {
+            background-color: #a5d6a7;
+            transform: scale(1.05)
+        }
+
+        .sidebar li.active {
+            background-color: #81c784;
+            font-weight: bold
+        }
+
+        .sidebar.dark li {
+            background-color: #546e7a
+        }
+
+        .sidebar.dark li:hover {
+            background-color: #78909c
+        }
+
+        .sidebar.dark li.active {
+            background-color: #90a4ae
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 30px;
+            flex-grow: 1;
+            min-height: calc(100vh - 80px)
+        }
+
+        .welcome-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, .5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center
+        }
+
+        .welcome-modal.active {
+            display: flex
+        }
+
+        .welcome-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .2)
+        }
+
+        .welcome-content.dark {
+            background-color: #37474f
+        }
+
+        .welcome-content h2 {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 20px
+        }
+
+        .welcome-content.dark h2 {
+            color: #80deea
+        }
+
+        .welcome-content p {
+            font-size: 16px;
+            margin-bottom: 20px
+        }
+
+        .welcome-content button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer
+        }
+
+        .welcome-content button:hover {
+            background-color: #388e3c
+        }
+
+        .progress-bar {
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
+        }
+
+        .progress-bar.dark {
+            background-color: #37474f
+        }
+
+        .progress-bar p {
+            font-size: 16px;
+            margin-bottom: 10px
+        }
+
+        .progress-bar .bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden
+        }
+
+        .progress-bar .bar div {
+            height: 100%;
+            background-color: #4caf50;
+            transition: width .3s
+        }
+
+        .main-content h1 {
+            font-size: 32px;
+            color: #4caf50;
+            margin-bottom: 30px
+        }
+
+        .main-content.dark h1 {
+            color: #80deea
+        }
+
+        .topic-section {
+            margin-bottom: 30px
+        }
+
+        .topic-header {
+            background-color: #ffca28;
+            color: #333;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color .3s
+        }
+
+        .topic-header:hover {
+            background-color: #ffb300
+        }
+
+        .topic-header.dark {
+            background-color: #546e7a;
+            color: #eceff1
+        }
+
+        .topic-header.dark:hover {
+            background-color: #78909c
+        }
+
+        .topic-content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
+        }
+
+        .topic-content.active {
+            display: block
+        }
+
+        .topic-content.dark {
+            background-color: #37474f
+        }
+
+        .video-card {
+            display: flex;
+            align-items: center;
+            background-color: #b3e5fc;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+            transition: transform .2s
+        }
+
+        .video-card.dark {
+            background-color: #546e7a
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px)
+        }
+
+        .video-card input[type="checkbox"] {
+            margin-right: 15px;
+            width: 22px;
+            height: 22px;
+            cursor: pointer
+        }
+
+        .video-card iframe {
+            width: 320px;
+            height: 180px;
+            border: none;
+            margin-right: 20px
+        }
+
+        .video-card h3 {
+            font-size: 18px;
+            flex-grow: 1
+        }
+
+        .placeholder-card {
+            display: flex;
+            align-items: center;
+            background-color: #b3e5fc;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+            transition: transform .2s
+        }
+
+        .placeholder-card.dark {
+            background-color: #546e7a
+        }
+
+        .placeholder-card:hover {
+            transform: translateY(-4px)
+        }
+
+        .placeholder-card img {
+            width: 320px;
+            height: 180px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 8px
+        }
+
+        .placeholder-card p {
+            font-size: 16px;
+            color: #d81b60
+        }
+
+        .placeholder-card a {
+            color: #0288d1;
+            text-decoration: none;
+            font-weight: bold
+        }
+
+        .placeholder-card a:hover {
+            text-decoration: underline
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            color: #4caf50
+        }
+
+        .loading.active {
+            display: block
+        }
+
+        .course-complete {
+            display: none;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px
+        }
+
+        .course-complete.active {
+            display: block
+        }
+
+        @media (max-width:768px) {
+            .sidebar {
+                width: 260px;
+                transform: translateX(-100%)
+            }
+
+            .sidebar.active {
+                transform: translateX(0)
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-right: 20px
+            }
+
+            .video-card,
+            .placeholder-card {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .video-card iframe,
+            .placeholder-card img {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px
+            }
+
+            .video-card h3,
+            .placeholder-card p {
+                font-size: 16px
+            }
+        }
+
+        @media (max-width:480px) {
+            .main-content {
+                padding: 15px
+            }
+
+            .main-content h1 {
+                font-size: 28px
+            }
+
+            .topic-header {
+                font-size: 20px
+            }
+
+            .video-card iframe,
+            .placeholder-card img {
+                height: 160px
+            }
+
+            .welcome-content {
+                max-width: 90%
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <button class="menu-toggle">☰</button>
+        <div class="logo">Construction Testing Course</div>
+        <button class="theme-toggle">🌙</button>
+    </header>
+    <div class="welcome-modal" id="welcome-modal">
+        <div class="welcome-content">
+            <h2>Welcome, Young Engineers! 🚧</h2>
+            <p>Learn how roads and buildings are made strong! Click the green menu to pick a topic, watch fun videos,
+                and check the box when you're done. Let's build something awesome! 🎉</p>
+            <button onclick="closeWelcome()">Start Learning!</button>
+        </div>
+    </div>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Course Topics</h2>
+            <ul>
+                <li class="active" data-category="demo">Demo Lessons</li>
+                <li data-category="wmm">Wet Mix Macadam</li>
+                <li data-category="gsb">Granular Sub Base</li>
+                <li data-category="dbm">Dense Bituminous Macadam</li>
+                <li data-category="bc">Bituminous Concrete</li>
+                <li data-category="subgrade">Subgrade & Earthwork</li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <div class="course-complete" id="course-complete">🎉 Course Complete! You're a Construction Star! 🌟</div>
+            <div class="progress-bar">
+                <p>Progress: <span id="progress-text">0%</span></p>
+                <div class="bar">
+                    <div id="progress-fill" style="width:0%"></div>
+                </div>
+            </div>
+            <h1 id="category-title">Demo Lessons</h1>
+            <div class="loading" id="loading">Loading your lessons... 🚧</div>
+            <div id="video-sections"></div>
+        </main>
+    </div>
+    <script>const topics = { demo: { Introduction: [{ title: "Introduction of WMM Mix Design", url: "https://iframe.mediadelivery.net/embed/95057/1e5fb6dd-5403-43f5-9ead-2c637c0f569f?autoplay=false" }, { title: "Introduction of Aggregate Gradation Test", url: "https://iframe.mediadelivery.net/embed/95057/b2a683d0-05bb-411f-a879-a46bd0959222?autoplay=false" }], "Gradation Tests": [{ title: "Individual sieve analysis for Gradation Test Part -1", url: "https://iframe.mediadelivery.net/embed/95057/89ba7f1b-9283-4ee1-8ed9-9ceb2e621da3?autoplay=false" }, { title: "Individual sieve analysis for Gradation Test Part -2", url: "https://iframe.mediadelivery.net/embed/95057/60bec033-7a08-48fb-bb2f-215dfb473dfa?autoplay=false" }] }, wmm: { Introduction: [{ title: "Introduction of WMM Mix Design", url: "https://iframe.mediadelivery.net/embed/95057/1e5fb6dd-5403-43f5-9ead-2c637c0f569f?autoplay=false" }, { title: "Introduction of Aggregate Gradation Test", url: "https://iframe.mediadelivery.net/embed/95057/b2a683d0-05bb-411f-a879-a46bd0959222?autoplay=false" }], "Gradation Tests": [{ title: "Individual sieve analysis for Gradation Test Part -1", url: "https://iframe.mediadelivery.net/embed/95057/89ba7f1b-9283-4ee1-8ed9-9ceb2e621da3?autoplay=false" }, { title: "Individual sieve analysis for Gradation Test Part -2", url: "https://iframe.mediadelivery.net/embed/95057/60bec033-7a08-48fb-bb2f-215dfb473dfa?autoplay=false" }, { title: "Blending of Aggregate & Stone dust", url: "https://iframe.mediadelivery.net/embed/95057/f1a8739a-6742-4aa2-8ae7-761500b8d6c3?autoplay=false" }, { title: "Draw Graph as per MORTH specification for Gradation test", url: "https://iframe.mediadelivery.net/embed/95057/c8b12de2-d9bc-4ce0-8026-b792954df35f?autoplay=false" }], "Compaction Tests": [{ title: "Introduction of Proctor Compaction Test", url: "https://iframe.mediadelivery.net/embed/95057/7982d57c-4a3d-4b40-8b1d-ac5f138b0369?autoplay=false" }, { title: "IS Code 2720 part 8 Recommendation", url: "https://iframe.mediadelivery.net/embed/95057/f3a4a3ab-ec47-47bf-9f2f-4b0a265a181f?autoplay=false" }, { title: "Sample preparation of Proctor compaction test", url: "https://iframe.mediadelivery.net/embed/95057/3d996a2c-8987-4b70-bcac-9c5cdebbfa09?autoplay=false" }, { title: "Graph Prepare according to Proctor Compaction Test sheet", url: "https://iframe.mediadelivery.net/embed/95057/e899fb6c-4f4f-4389-b3d0-0ac973fc24a2?autoplay=false" }, { title: "3D Model of Proctor Compaction Test of Soil", url: "https://p3d.in/e/R2hqi+spin+load+dl,share,link-hidden" }], "Other Tests": [{ title: "Los Angeles Abrasion Test", url: "https://iframe.mediadelivery.net/embed/95057/b28bc1de-eb47-45d9-bcf3-ab772668e9f7?autoplay=false" }, { title: "3D Model of Los Angeles Abrasion Test", url: "https://p3d.in/e/b430O+spin+load+dl,share,link-hidden" }, { title: "Aggregate Impact Value for WMM", url: "https://iframe.mediadelivery.net/embed/95057/8936a1a4-8ee7-4e1a-ae73-9cd56d02d347?autoplay=false" }, { title: "3D Model of Impact Value Test of Aggregate", url: "https://p3d.in/e/tAatA+spin+load+dl,share,link-hidden" }, { title: "Liquid limit and plastic limit by cone penetration method", url: "https://iframe.mediadelivery.net/embed/95057/622a00a2-b817-488f-83f1-3431bea7193c?autoplay=false" }, { title: "3D Model of Liquid Limit & Plastic Limit By Cone Penetration Method", url: "https://p3d.in/e/pPX66+spin+load+dl,share,link-hidden" }, { title: "Flakiness & Elongation test for WMM", url: "https://iframe.mediadelivery.net/embed/95057/1dc4a5c9-0620-4f8b-82c9-51cf39efa801?autoplay=false" }, { title: "Specific gravity & Water Absorption of 20mm Aggregate", url: "https://iframe.mediadelivery.net/embed/95057/5abc3768-303f-4374-baf7-31ea73552f2a?autoplay=false" }, { title: "Specific Gravity and Water Absorption of Stone dust", url: "https://iframe.mediadelivery.net/embed/95057/b181fdfe-cafb-4f9c-bec4-f8476922c527?autoplay=false" }, { title: "WMM material preparation in Plant", url: "https://iframe.mediadelivery.net/embed/95057/eb80fd0d-25b0-48c1-b614-9766cf5465d8?autoplay=false" }] }, gsb: { "Gradation Tests": [{ title: "GSB Gradation as per MORTH Specification", url: "https://iframe.mediadelivery.net/embed/95057/01a33f65-5958-4e3e-a66b-6e2203426a5c?autoplay=false" }, { title: "Preparing sample for Gradation Test", url: "https://iframe.mediadelivery.net/embed/95057/efd0a479-c164-455b-9a65-3c189716397f?autoplay=false" }, { title: "Individual sieve analysis for Gradation Test", url: "https://iframe.mediadelivery.net/embed/95057/0aee7771-b85a-4ea5-86af-cb949bebda25?autoplay=false" }, { title: "Blending of Aggregate & Stone dust", url: "https://iframe.mediadelivery.net/embed/95057/10b78470-8e60-4a8e-a367-592448e85dbe?autoplay=false" }, { title: "Draw Graph as per MORTH specification for Gradation Test", url: "https://iframe.mediadelivery.net/embed/95057/0bd495ab-d5d8-4e2a-be24-cfc1108382d3?autoplay=false" }], "Compaction Tests": [{ title: "Proctor Compaction Test for GSB Material", url: "https://iframe.mediadelivery.net/embed/95057/4a4d51d4-0402-4049-835b-3bf00f01528f?autoplay=false" }, { title: "Preparing Graph For Proctor Compaction Test", url: "https://iframe.mediadelivery.net/embed/95057/7229adab-a9d5-4eb9-818e-6ee75e95d84b?autoplay=false" }], "Strength Tests": [{ title: "Introduction of California Bearing Ratio Test", url: "https://iframe.mediadelivery.net/embed/95057/72451720-b886-4465-86a0-52da0f6b7ace?autoplay=false" }, { title: "Material Preparation of California Bearing Ratio Test", url: "https://iframe.mediadelivery.net/embed/95057/d225a949-ad85-4084-adb3-0c01ad1eba2c?autoplay=false" }, { title: "Report sheet of California Bearing Ratio Test", url: "https://iframe.mediadelivery.net/embed/95057/7b9c7834-d144-492f-8dd8-528d574a5103?autoplay=false" }, { title: "3D Model of California Bearing Ratio", url: "https://p3d.in/e/4lxgi+spin+load+dl,share,link-hidden" }], "Other Tests": [{ title: "Aggregate Impact Value Test For GSB Material", url: "https://iframe.mediadelivery.net/embed/95057/f987cecc-3b27-4535-8d1a-adc2c03cd7c4?autoplay=false" }, { title: "Liquid Limit & Plastic Limit of GSB", url: "https://iframe.mediadelivery.net/embed/95057/519e9018-200b-45d4-8348-55bbe82cb42b?autoplay=false" }, { title: "Flakiness & Elongation Test For GSB", url: "https://iframe.mediadelivery.net/embed/95057/be33fa16-5679-458d-b5c8-9be2f57b5923?autoplay=false" }, { title: "Specific Gravity & Water Absorption by wire mesh basket of 40mm aggregate", url: "https://iframe.mediadelivery.net/embed/95057/eebe09ea-c08a-45e1-8862-a368b6bfcfb6?autoplay=false" }, { title: "Determination of Specific Gravity & Water Absorption of Aggregate if size is smaller than 10mm", url: "https://iframe.mediadelivery.net/embed/95057/f1c67db7-70b1-4b72-aeab-5ea61eaf3c63?autoplay=false" }, { title: "Determination of Specific Gravity & Water Absorption of Aggregate if size is greater than 10mm", url: "https://iframe.mediadelivery.net/embed/95057/afee16e6-d966-47e5-bc8c-fcf63026d5c1?autoplay=false" }] }, dbm: { "Aggregate Tests": [{ title: "Aggregate Impact Value for DBM", url: "https://iframe.mediadelivery.net/embed/95057/26d72aea-add7-42d1-a473-c12397035a85?autoplay=false" }, { title: "Flakiness Index and Elongation Index Tests", url: "https://iframe.mediadelivery.net/embed/95057/dba23be7-e157-4d55-9cf7-a9961b179835?autoplay=false" }, { title: "Specific gravity & Water absorption by wire mesh basket", url: "https://iframe.mediadelivery.net/embed/95057/2e66cc61-d8ae-45a9-b714-b9d028e0c4d9?autoplay=false" }, { title: "Specific gravity & Water absorption of Stone dust by Pycnometer", url: "https://iframe.mediadelivery.net/embed/95057/325a8b66-71a5-4212-8cb4-550fde923bd4?autoplay=false" }], "Bitumen Tests": [{ title: "Soundness Test of DBM", url: "https://iframe.mediadelivery.net/embed/95057/1e5fb6dd-5403-43f5-9ead-2c637c0f569f?autoplay=false" }, { title: "3D Model of Soundness Test of Bitumen", url: "https://p3d.in/e/pA978+spin+load+dl,share,link-hidden" }, { title: "Stripping Test of DBM", url: "https://iframe.mediadelivery.net/embed/95057/4b23bfe9-9a88-485f-8e81-88565b7b2577?autoplay=false" }, { title: "3D Model of Stripping Value Test of Bitumen", url: "https://p3d.in/e/LYbTs+spin+load+dl,share,link-hidden" }, { title: "Penetration Test of Bitumen (DBM)", url: "https://iframe.mediadelivery.net/embed/95057/ae0038b2-e3a3-4137-a18c-de208c943029?autoplay=false" }, { title: "3D Model of Penetration Test Of Bitumen", url: "https://p3d.in/e/PMnvD+spin+load+dl,share,link-hidden" }, { title: "Ductility Test of Bitumen (DBM)", url: "https://iframe.mediadelivery.net/embed/95057/d51b9f8a-a84e-4eda-bcef-b3b101dfef71?autoplay=false" }, { title: "3D Model of Ductility of Bitumen", url: "https://p3d.in/e/WXUvY+spin+load+dl,share,link-hidden" }, { title: "Softening Point of Bitumen (DBM)", url: "https://iframe.mediadelivery.net/embed/95057/1f234a62-72c2-48cd-848e-3038b67ce70a?autoplay=false" }, { title: "3D Model of Softening Point Of Bitumen", url: "https://p3d.in/e/PgKtW+spin+load+dl,share,link-hidden" }, { title: "Flash & Fire Point (DBM)", url: "https://iframe.mediadelivery.net/embed/95057/b7c8c662-099d-4056-9ed1-2fc610e8b6e9?autoplay=false" }, { title: "3D Model of Flash And Fire Point Of Bitumen", url: "https://p3d.in/e/v7KsI+spin+load+dl,share,link-hidden" }, { title: "Specific Gravity of Bitumen (DBM)", url: "https://iframe.mediadelivery.net/embed/95057/ee8e353d-2c91-462e-af38-1130f316407b?autoplay=false" }, { title: "3D Model of Specific Gravity Of Bitumen", url: "https://p3d.in/e/eDzfH+spin+load+dl,share,link-hidden" }, { title: "Absolute Viscosity of Bitumen", url: "https://iframe.mediadelivery.net/embed/95057/4bbf5596-c66a-41ef-a6fb-cd7bdc63506f?autoplay=false" }, { title: "3D Model of Absolute Viscosity Of Bitumen", url: "https://p3d.in/e/2RmUA+spin+load+dl,share,link-hidden" }, { title: "Kinematic Viscosity DBM", url: "https://iframe.mediadelivery.net/embed/95057/550731f8-f67f-44b6-bbab-9b423873ebb6?autoplay=false" }, { title: "3D Model of Kinematic Viscosity Of Bitumen", url: "https://p3d.in/e/1uVjW+spin+load+dl,share,link-hidden" }] }, bc: { "Bitumen Tests": [{ title: "Soundness Test of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/fff06c8f-4ca0-4d90-aa38-43a5706ba4e6?autoplay=false" }, { title: "Stripping Test Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/02822314-0530-4175-9302-205fb3da728f?autoplay=false" }, { title: "Penetration Test of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/16e782e3-e384-4b8b-8baa-7527fc3e4128?autoplay=false" }, { title: "Ductility Test of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/af9eaf93-f817-4d37-b0c7-bea68479a130?autoplay=false" }, { title: "Softening Point of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/3ed6a22d-9a65-48f5-832f-007debed045e?autoplay=false" }, { title: "Flash & Fire Point of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/18e5d8a2-af34-4e14-b0e9-aa5d6232996c?autoplay=false" }, { title: "Specific Gravity of Bitumen", url: "https://iframe.mediadelivery.net/embed/95057/db62d90e-cd29-44ef-812c-59c323cf5910?autoplay=false" }, { title: "Absolute Viscosity of Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/2e7e3ce1-76a9-4719-a3b8-4de4e0df6c8c?autoplay=false" }, { title: "Kinematic Viscosity Bituminous Concrete", url: "https://iframe.mediadelivery.net/embed/95057/bb05edde-25a9-46f0-aed2-bc515d28f7f5?autoplay=false" }, { title: "3D Model of Soundness Test of Bitumen", url: "https://p3d.in/e/pA978+spin+load+dl,share,link-hidden" }] }, subgrade: { "Density Tests": [{ title: "Field Dry Density test by Core Cutter Method", url: "https://iframe.mediadelivery.net/embed/95057/d676d316-0b8f-4554-9cbc-05dce7a6b233?autoplay=false" }, { title: "3D Model of Field Dry Density By Core Cutting Method", url: "https://p3d.in/e/YfaqX+spin+load+dl,share,link-hidden" }, { title: "Rapid Moisture Meter Test", url: "https://iframe.mediadelivery.net/embed/95057/169904e4-d26e-4b0b-91e7-08e91b9823bf?autoplay=false" }, { title: "3D Model of Rapid Moisture Meter", url: "https://p3d.in/e/LkmY0+spin+load+dl,share,link-hidden" }], "Compaction Tests": [{ title: "Prepare sample material for Proctor Compaction Test", url: "https://iframe.mediadelivery.net/embed/95057/f56d643c-a886-406f-9cfc-9ff99fc015f0?autoplay=false" }, { title: "Draw Graph as per Proctor Compaction Test", url: "https://iframe.mediadelivery.net/embed/95057/1341d9c9-8a9e-48db-bb60-87434499effe?autoplay=false" }], Calculations: [{ title: "Final Calculation for Sub - Grade & Earthwork", url: "https://iframe.mediadelivery.net/embed/95057/3bd50f93-a145-41da-8919-9eb067c2d5a0?autoplay=false" }] } }; const sidebar = document.querySelector(".sidebar"), menuToggle = document.querySelector(".menu-toggle"), themeToggle = document.querySelector(".theme-toggle"), videoSections = document.querySelector("#video-sections"), categoryTitle = document.querySelector("#category-title"), categoryItems = document.querySelectorAll(".sidebar li"), welcomeModal = document.querySelector("#welcome-modal"), progressText = document.querySelector("#progress-text"), progressFill = document.querySelector("#progress-fill"), loading = document.querySelector("#loading"), courseComplete = document.querySelector("#course-complete"); function renderTopics(e) { loading.classList.add("active"), videoSections.innerHTML = ""; let t = 0; Object.keys(topics[e]).forEach(a => { const r = document.createElement("div"); r.classList.add("topic-section"); let c = ""; topics[e][a].forEach(i => { t++, i.url.includes("p3d.in") ? c += `<div class="placeholder-card ${document.body.classList.contains("dark") ? "dark" : ""}"><img src="https://via.placeholder.com/320x180.png?text=Construction+Model" alt="Placeholder"><p>3D Model "${i.title}" is Coming Soon! <a href="${i.url}" target="_blank">View Externally</a></p></div>` : c += `<div class="video-card ${document.body.classList.contains("dark") ? "dark" : ""}"><input type="checkbox" class="progress-checkbox" data-title="${i.title}"><iframe src="${i.url}" frameborder="0" allowfullscreen></iframe><h3>${i.title}</h3></div>` }), r.innerHTML = `<div class="topic-header ${document.body.classList.contains("dark") ? "dark" : ""}">${a}<span>▼</span></div><div class="topic-content ${document.body.classList.contains("dark") ? "dark" : ""}">${c}</div>`, videoSections.appendChild(r) }), categoryTitle.textContent = categoryItems[Array.from(categoryItems).findIndex(a => a.dataset.category === e)].textContent, document.querySelectorAll(".topic-header").forEach(a => { a.addEventListener("click", () => { const e = a.nextElementSibling; e.classList.toggle("active"), a.querySelector("span").textContent = e.classList.contains("active") ? "▲" : "▼" }) }), updateProgress(e), setTimeout(() => { loading.classList.remove("active") }, 500) } function updateProgress(e) { const t = document.querySelectorAll(".progress-checkbox"); let a = 0, r = 0; Object.values(topics[e]).flat().forEach(e => { e.url.includes("p3d.in") || (a++, localStorage.getItem(`progress-${e.title}`) === "true" && r++) }); const c = a > 0 ? Math.round(r / a * 100) : 0; progressText.textContent = `${c}%`, progressFill.style.width = `${c}%`, courseComplete.classList.toggle("active", c === 100), t.forEach(t => { const a = t.dataset.title; t.checked = localStorage.getItem(`progress-${a}`) === "true", t.addEventListener("change", () => { localStorage.setItem(`progress-${a}`, t.checked), updateProgress(e) }) }) } categoryItems.forEach(e => { e.addEventListener("click", () => { categoryItems.forEach(e => e.classList.remove("active")), e.classList.add("active"), renderTopics(e.dataset.category), window.innerWidth <= 768 && sidebar.classList.remove("active") }) }), menuToggle.addEventListener("click", () => { sidebar.classList.toggle("active") }), themeToggle.addEventListener("click", () => { document.body.classList.toggle("dark"), document.querySelector(".header").classList.toggle("dark"), sidebar.classList.toggle("dark"), document.querySelectorAll(".video-card,.placeholder-card").forEach(e => e.classList.toggle("dark")), document.querySelectorAll(".topic-header").forEach(e => e.classList.toggle("dark")), document.querySelectorAll(".topic-content").forEach(e => e.classList.toggle("dark")), document.querySelector(".progress-bar").classList.toggle("dark"), document.querySelector(".main-content h1").classList.toggle("dark"), welcomeModal.querySelector(".welcome-content").classList.toggle("dark"), welcomeModal.querySelector("h2").classList.toggle("dark"), themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙" }); function closeWelcome() { welcomeModal.classList.remove("active"), localStorage.setItem("welcome-shown", "true") } localStorage.getItem("welcome-shown") || welcomeModal.classList.add("active"), renderTopics("demo");</script>
+</body>
+
+</html>
